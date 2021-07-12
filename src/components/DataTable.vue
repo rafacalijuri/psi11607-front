@@ -18,7 +18,7 @@
       disable-pagination
       height="300"
     >
-      <template v-slot:item.ValorRepasse="{ item }">
+      <template v-slot:[`item.ValorRepasse`]="{ item }">
       <span>{{ parseFloat(item.ValorRepasse).toLocaleString(undefined, {maximumFractionDigits: 0}) }}</span>
       </template>
 
