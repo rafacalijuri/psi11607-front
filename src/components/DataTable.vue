@@ -16,7 +16,7 @@
       dense
       fixed-header
       disable-pagination
-      height="200"
+      height="160"
     >
       <template v-slot:[`item.ValorRepasse`]="{ item }">
       <span>{{ parseFloat(item.ValorRepasse).toLocaleString(undefined, {maximumFractionDigits: 0}) }}</span>
@@ -27,30 +27,32 @@
 </template>
 
 <script>
-    export default {
 
-        data () {
-        return {
-            headers: [
-            { text: 'Unidade', value: 'Sigla', class: "grey lighten-5 blue--text" },
-            { text: 'Qtd', value: 'QuantidadePropostas', align: 'center', class: "grey lighten-5 blue--text" },
-            { text: 'Valor', value: 'ValorRepasse', align: 'right', class: "grey lighten-5 blue--text" },
-            ],
+  import {pathApi} from '@/assets/js/variaveis.js';
 
-            totalUnidade: [],
-            
-        }
-        },
+  export default {
 
-        created(){
-    
-        //let totalUnidadePromisse = this.axios.get("http://localhost:8000/api/propostas/totalPorUnidade");
-        let totalUnidadePromisse = this.axios.get("http://canais.caixa/c098452back/public/index.php/api/propostas/totalPorUnidade");
+      data () {
+      return {
+          headers: [
+          { text: 'Unidade', value: 'Sigla', class: "grey lighten-5 blue--text" },
+          { text: 'Qtd', value: 'QuantidadePropostas', align: 'center', class: "grey lighten-5 blue--text" },
+          { text: 'Valor', value: 'ValorRepasse', align: 'right', class: "grey lighten-5 blue--text" },
+          ],
 
-        totalUnidadePromisse
-        .then(res => this.totalUnidade = res.data);
+          totalUnidade: [],
+          
+      }
+      },
 
-    	},
+      created(){
+  
+      let totalUnidadePromisse = this.axios.get(pathApi + "/propostas/totalPorUnidade");
+
+      totalUnidadePromisse
+      .then(res => this.totalUnidade = res.data);
+
+  },
 
   }
 </script>

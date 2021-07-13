@@ -6,31 +6,73 @@
             {{titulo}}
         </v-card-title>
 
-         <v-card-subtitle class="font-weight-bold text-h7" :style="{color: corSubTitulo}">
-             <v-icon v-if="subtitulo == 'CONTRATADAS'" color="green" small>mdi-checkbox-marked-circle</v-icon>
-             <v-icon v-if="subtitulo == 'NÃO CONTRATADAS'" color="#ff4949" small>mdi-cancel</v-icon>
-             {{subtitulo}}
-         </v-card-subtitle>
+        <v-card-subtitle v-if="tipoCard == 'aprovado'" class="font-weight-bold text-h7 pt-1" style="color: #ff4949">
+            <v-icon  color="#ff4949" small>mdi-cancel</v-icon>
+                NÃO CONTRATADAS
+        </v-card-subtitle>
 
         <v-card-text  class="text--primary">
 
-             <v-row dense>
-                 <v-col cols="6">
-            <div class="text-center text-h3 font-weight-bold mb-3 quantidade">
-                {{quantidade}}
-            </div>
-                 </v-col>
-                 <v-col cols="6">
-                <div class="text-right" style="font-size:15px; color: #336699">
-                    Valor Repasse
-                </div>
-            <div class="text-right text-h6 valorRepasse">
-                R$ {{formataNumero(valor)}}
-            </div>
-                 </v-col>
-             </v-row>
+            <v-row dense>
+                <v-col cols="6">
+                    <div class="text-center text-h3 font-weight-bold mb-3 quantidade">
+                        {{quantidade}}
+                    </div>
+                </v-col>
+                <v-col cols="6">
+                    <div class="text-right" style="font-size:15px; color: #336699">
+                        Valor Repasse
+                    </div>
+                    <div class="text-right text-h6 valorRepasse">
+                        R$ {{formataNumero(valor)}}
+                    </div>
+                </v-col>
+            </v-row>
         
         </v-card-text>
+
+        <div v-if="tipoCard == 'aprovado'">
+
+            <div class="separador pb-4">
+                <div></div>
+            </div>
+
+            <v-card-subtitle class="font-weight-bold text-h7 pt-1" style="color: green">
+                <v-icon v-if="tipoCard == 'aprovado'" color="green" small>mdi-checkbox-marked-circle</v-icon>
+                    CONTRATADAS
+            </v-card-subtitle>
+
+            <v-card-text  class="text--primary">
+
+                <v-row dense>
+                    <v-col cols="6">
+                        <div class="text-center text-h3 font-weight-bold mb-3 quantidade">
+                            {{quantidade2}}
+                        </div>
+                    </v-col>
+                    <v-col cols="6">
+                        <div class="text-right" style="font-size:15px; color: #336699">
+                            Valor Repasse
+                        </div>
+                        <div class="text-right text-h6 valorRepasse">
+                            R$ {{formataNumero(valor2)}}
+                        </div>
+                    </v-col>
+                </v-row>
+            
+            </v-card-text>
+
+            <div style="margin-top: -10px; padding: 10px" >
+                <v-progress-linear
+
+      color="green"
+      :value="percentualContratado"
+      height="6px"
+      striped
+    ></v-progress-linear>
+            </div>
+
+        </div>
 
     </v-card>
 
@@ -39,7 +81,7 @@
 <script>
     export default {
 
-        props: ['corTitulo','corSubTitulo','titulo','subtitulo','quantidade','valor'],
+        props: ['corTitulo','titulo','quantidade','valor','quantidade2','valor2','tipoCard','percentualContratado'],
 
         methods: {
 
@@ -64,6 +106,17 @@
 
     .quantidade{
         color:#007792;
+    }
+
+    .separador{
+        text-align:center;
+        margin-top: -20px;
+    }
+
+    .separador div{
+        display: inline-block;
+        width: 90%;
+        border-bottom: 1px dotted #b7b5b5;
     }
 
 </style>

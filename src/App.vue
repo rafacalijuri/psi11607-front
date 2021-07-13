@@ -10,7 +10,7 @@
       </filtro-proposta>
 
       <v-container>
-        <v-row dense>
+        <v-row>
 
           <v-col cols="6">
          
@@ -18,6 +18,7 @@
               <card-proposta
                 corTitulo="#6cc77c"
                 titulo="Aptas Análise Plano de Trabalho"
+                tipoCard="apta"
                 :quantidade="dadosCard.quantidadeAptas"
                 :valor="dadosCard.valorRepasseAptas">
               </card-proposta>
@@ -27,21 +28,13 @@
               <card-proposta 
                 corTitulo="#6aacfd"
                 titulo="Plano de Trabalho Aprovado"
-                subtitulo="NÃO CONTRATADAS"
-                corSubTitulo="#ff4949"
+                tipoCard="aprovado"
                 :quantidade="dadosCard.quantidadeProspeccao"
-                :valor="dadosCard.valorRepasseProspeccao">
-              </card-proposta>
-            </v-col>
-
-            <v-col cols="12">
-              <card-proposta
-                corTitulo="#6aacfd"
-                titulo="Plano de Trabalho Aprovado"
-                subtitulo="CONTRATADAS"
-                corSubTitulo="green"
-                :quantidade="dadosCard.quantidadeContratadas"
-                :valor="dadosCard.valorRepasseContratadas">
+                :valor="dadosCard.valorRepasseProspeccao"
+                :quantidade2="dadosCard.quantidadeContratadas"
+                :valor2="dadosCard.valorRepasseContratadas"
+                :percentualContratado="percentualContratado"
+              >
               </card-proposta>
             </v-col>
 
@@ -49,7 +42,7 @@
 
           <v-col cols="6">
               
-              <v-col cols="12" style="height:270px; border-bottom:1px solid #a9c2e0">
+              <v-col cols="12" style="height:220px; border-bottom:1px solid #a9c2e0">
                 <tabela-unidades></tabela-unidades>
               </v-col>
 
@@ -73,8 +66,9 @@
 
 import Filtro from './components/Filtro.vue';
 import Card from './components/Card.vue';
-import DataTable from './components/DataTable.vue'
-import Grafico from './components/Grafico.vue'
+import DataTable from './components/DataTable.vue';
+import Grafico from './components/Grafico.vue';
+import {pathApi} from '@/assets/js/variaveis.js';
 
 export default {
 
@@ -83,6 +77,7 @@ export default {
 
       selectUnidades: [],
       dadosCard: [],
+      percentualContratado: 50,
       
     };
   },
@@ -95,9 +90,8 @@ export default {
   },
 
   created(){
-    
-    let unidadesPromisse = this.axios.get("http://canais.caixa/c098452back/public/index.php/api/unidades");
-    //let unidadesPromisse = this.axios.get("http://localhost:8000/api/unidades");
+
+    let unidadesPromisse = this.axios.get(pathApi + "/unidades");
 
     unidadesPromisse
       .then(unidades => {
@@ -112,11 +106,17 @@ export default {
 
       carregaDadosCard: function(unidadeId){
 
-        let dadosCardPromisse = this.axios.get("http://canais.caixa/c098452back/public/index.php/api/propostas/" + unidadeId + "/total");
-        //let dadosCardPromisse = this.axios.get("http://localhost:8000/api/propostas/" + unidadeId + "/total");
+        let dadosCardPromisse = this.axios.get(pathApi + "/propostas/" + unidadeId + "/total");
 
         dadosCardPromisse
-          .then(dadosCard => this.dadosCard = dadosCard.data);
+          .then(dadosCard => {
+            this.dadosCard = dadosCard.data;
+            if (dadosCard.data.quantidadeContratadas == 0){
+              this.percentualContratado = 0;
+            }else{
+              this.percentualContratado = (dadosCard.data.quantidadeContratadas / (dadosCard.data.quantidadeContratadas + dadosCard.data.quantidadeProspeccao)) * 100;
+            }
+          });
 
       },
       
