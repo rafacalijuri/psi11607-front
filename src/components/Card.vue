@@ -64,12 +64,11 @@
 
             <div style="margin-top: -10px; padding: 10px" >
                 <v-progress-linear
-
-      color="green"
-      :value="percentualContratado"
-      height="6px"
-      striped
-    ></v-progress-linear>
+                    color="green"
+                    :value="percentualContratado"
+                    height="6px"
+                    striped
+                ></v-progress-linear>
             </div>
 
         </div>
