@@ -50,8 +50,9 @@ export default {
     },
 
     created(){
-    
-        let dadosGraficoPromisse = this.axios.get("http://localhost:8000/api/propostas/contratadasMes");
+        
+        let dadosGraficoPromisse = this.axios.get("http://canais.caixa/c098452back/public/index.php/api/propostas/contratadasMes");
+        //let dadosGraficoPromisse = this.axios.get("http://localhost:8000/api/propostas/contratadasMes");
 
         dadosGraficoPromisse
             .then(res => this.converteDadosGrafico(res.data));

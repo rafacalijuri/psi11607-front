@@ -16,7 +16,7 @@
          
             <v-col cols="12">
               <card-proposta
-                corCard="#f7ee9894"
+                corTitulo="#6cc77c"
                 titulo="Aptas Análise Plano de Trabalho"
                 :quantidade="dadosCard.quantidadeAptas"
                 :valor="dadosCard.valorRepasseAptas">
@@ -25,10 +25,10 @@
 
             <v-col cols="12">
               <card-proposta 
-                corCard="#dae8f9"
+                corTitulo="#6aacfd"
                 titulo="Plano de Trabalho Aprovado"
                 subtitulo="NÃO CONTRATADAS"
-                corSubTitulo="red"
+                corSubTitulo="#ff4949"
                 :quantidade="dadosCard.quantidadeProspeccao"
                 :valor="dadosCard.valorRepasseProspeccao">
               </card-proposta>
@@ -36,7 +36,7 @@
 
             <v-col cols="12">
               <card-proposta
-                corCard="#dae8f9"
+                corTitulo="#6aacfd"
                 titulo="Plano de Trabalho Aprovado"
                 subtitulo="CONTRATADAS"
                 corSubTitulo="green"
@@ -49,7 +49,7 @@
 
           <v-col cols="6">
               
-              <v-col cols="12" style="height:370px; border-bottom:1px solid #a9c2e0">
+              <v-col cols="12" style="height:270px; border-bottom:1px solid #a9c2e0">
                 <tabela-unidades></tabela-unidades>
               </v-col>
 
@@ -95,8 +95,9 @@ export default {
   },
 
   created(){
-   
-    let unidadesPromisse = this.axios.get("http://localhost:8000/api/unidades");
+    
+    let unidadesPromisse = this.axios.get("http://canais.caixa/c098452back/public/index.php/api/unidades");
+    //let unidadesPromisse = this.axios.get("http://localhost:8000/api/unidades");
 
     unidadesPromisse
       .then(unidades => {
@@ -111,7 +112,8 @@ export default {
 
       carregaDadosCard: function(unidadeId){
 
-        let dadosCardPromisse = this.axios.get("http://localhost:8000/api/propostas/" + unidadeId + "/total");
+        let dadosCardPromisse = this.axios.get("http://canais.caixa/c098452back/public/index.php/api/propostas/" + unidadeId + "/total");
+        //let dadosCardPromisse = this.axios.get("http://localhost:8000/api/propostas/" + unidadeId + "/total");
 
         dadosCardPromisse
           .then(dadosCard => this.dadosCard = dadosCard.data);

@@ -1,23 +1,34 @@
 <template>
     
-    <v-card :color="corCard">
+    <v-card color="#fbfbfb">
 
-        <v-card-title class="justify-center font-weight-bold titulo">
+        <v-card-title class="font-weight-bold titulo" :style="{color: corTitulo}">
             {{titulo}}
         </v-card-title>
 
-         <v-card-subtitle class="text-center font-weight-bold" :style="{color: corSubTitulo}">
+         <v-card-subtitle class="font-weight-bold text-h7" :style="{color: corSubTitulo}">
+             <v-icon v-if="subtitulo == 'CONTRATADAS'" color="green" small>mdi-checkbox-marked-circle</v-icon>
+             <v-icon v-if="subtitulo == 'NÃO CONTRATADAS'" color="#ff4949" small>mdi-cancel</v-icon>
              {{subtitulo}}
          </v-card-subtitle>
 
         <v-card-text  class="text--primary">
 
+             <v-row dense>
+                 <v-col cols="6">
             <div class="text-center text-h3 font-weight-bold mb-3 quantidade">
                 {{quantidade}}
             </div>
-            <div class="text-center text-h5 valorRepasse">
-                {{formataNumero(valor)}}
+                 </v-col>
+                 <v-col cols="6">
+                <div class="text-right" style="font-size:15px; color: #336699">
+                    Valor Repasse
+                </div>
+            <div class="text-right text-h6 valorRepasse">
+                R$ {{formataNumero(valor)}}
             </div>
+                 </v-col>
+             </v-row>
         
         </v-card-text>
 
@@ -28,7 +39,7 @@
 <script>
     export default {
 
-        props: ['corCard','corSubTitulo','titulo','subtitulo','quantidade','valor'],
+        props: ['corTitulo','corSubTitulo','titulo','subtitulo','quantidade','valor'],
 
         methods: {
 

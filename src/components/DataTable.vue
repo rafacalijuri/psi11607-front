@@ -16,7 +16,7 @@
       dense
       fixed-header
       disable-pagination
-      height="300"
+      height="200"
     >
       <template v-slot:[`item.ValorRepasse`]="{ item }">
       <span>{{ parseFloat(item.ValorRepasse).toLocaleString(undefined, {maximumFractionDigits: 0}) }}</span>
@@ -44,7 +44,8 @@
 
         created(){
     
-        let totalUnidadePromisse = this.axios.get("http://localhost:8000/api/propostas/totalPorUnidade");
+        //let totalUnidadePromisse = this.axios.get("http://localhost:8000/api/propostas/totalPorUnidade");
+        let totalUnidadePromisse = this.axios.get("http://canais.caixa/c098452back/public/index.php/api/propostas/totalPorUnidade");
 
         totalUnidadePromisse
         .then(res => this.totalUnidade = res.data);
